@@ -51,13 +51,18 @@ public class App {
                     Connection conn = null;
                     conn = DriverManager.getConnection("jdbc:mysql://localhost/jarvadb", "root", "");
                     PreparedStatement pstmt = conn.prepareStatement("INSERT INTO shows (Title, Season, Rating) VALUES(?,?,?)");
-                    pstmt.setString(1, titleTxt.getText());
-                    pstmt.setInt(2, seasonCB.getSelectedIndex()+1);
-                    pstmt.setInt(3, ratingCB.getSelectedIndex());
-                    pstmt.execute();
-                    titleTxt.getText();
-                    System.out.println("Database is connected!");
-                    conn.close();
+                    if(titleTxt.getText().isEmpty()){
+                        JOptionPane.showMessageDialog(null, "Please enter title of the show");
+
+                    }else {
+                        pstmt.setString(1, titleTxt.getText());
+                        pstmt.setInt(2, seasonCB.getSelectedIndex() + 1);
+                        pstmt.setInt(3, ratingCB.getSelectedIndex());
+                        pstmt.execute();
+                        titleTxt.getText();
+                        System.out.println("Database is connected!");
+                        conn.close();
+                    }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Please enter a valid season");
                     System.out.println("there was an error: " + ex);
